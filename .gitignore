@@ -1,5 +1,12 @@
-# Claude
-.claude/
+# Claude — track skills but not internal state
+.claude/worktrees/
+.claude/scheduled_tasks.json
+.claude/*.log
+# (skills are tracked in .claude/skills/)
+
+# Obsidian
+.obsidian/
+.trash/
 
 # Python
 __pycache__/
@@ -8,15 +15,23 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.venv/
+venv/
 
-# Eval outputs
-workspace/iteration-*/
-workspace/eval-*/
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary / extracted files
+/tmp/
+*.tmp
+
+# Vault progress data (user-specific, regenerated from source)
+InterviewVault/.progress/
 
 # IDE
 .vscode/
 .idea/
 
-# OS
-.DS_Store
-Thumbs.db
+# Logs
+*.log
