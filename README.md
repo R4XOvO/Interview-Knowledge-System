@@ -98,6 +98,14 @@ InterviewVault/
 - [x] Dataview 面板增强（9 个动态查询区块）
 - [x] mastered 自动判定（consecutive_correct ≥ 5 + ease_factor ≥ 2.5）
 
+## P2 开发进度
+
+- [x] 薄弱分析算法（正确率 + 概念依赖 + 学习路径）
+- [x] 复习效果评估（记忆保留率 + 掌握转化率 + 领域分析）
+- [x] Obsidian Graph View 配置（按状态/频率着色分组）
+- [x] 配置验证系统（schema 校验 + 默认值填充）
+- [x] 冒烟测试（35 项） + e2e 测试（21 项）
+
 ## 技术栈
 
 - **Obsidian** — Markdown 文件管理、双向链接、图谱视图

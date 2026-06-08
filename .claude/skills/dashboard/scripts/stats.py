@@ -185,6 +185,30 @@ def recalculate_stats(vault_path: str) -> dict:
 
     weak_concepts.sort(key=lambda x: x["correct_rate"])
 
+    # P2: 复习效果评估数据
+    total_reviews = sum(i.get("total_attempts", 0) for i in items.values())
+    retained_reviews = sum(i.get("total_correct", 0) for i in items.values())
+    retention_rate = round(retained_reviews / total_reviews, 2) if total_reviews > 0 else 0.0
+
+    mastered_items = [i for i in items.values() if i.get("status") == "mastered"]
+    mastery_conversion = {
+        "converted": len(mastered_items),
+        "total": len(items),
+        "avg_reviews_to_master": 0.0
+    }
+    if mastered_items:
+        avg = sum(i.get("total_attempts", 0) for i in mastered_items) / len(mastered_items)
+        mastery_conversion["avg_reviews_to_master"] = round(avg, 1)
+
+    weak_items = [i for i in items.values() if i.get("status") == "weak"]
+    weak_detection_correct = 0
+    for item in weak_items:
+        attempts = item.get("total_attempts", 0)
+        correct = item.get("total_correct", 0)
+        if attempts > 0 and correct / attempts < 0.6:
+            weak_detection_correct += 1
+    weak_accuracy = round(weak_detection_correct / len(weak_items), 2) if weak_items else 1.0
+
     return {
         "version": "1.0",
         "last_updated": datetime.now().isoformat(),
@@ -202,7 +226,13 @@ def recalculate_stats(vault_path: str) -> dict:
         },
         "by_frequency": by_frequency,
         "by_domain": by_domain,
-        "weak_concepts": weak_concepts[:10]  # 保留前10，dashboard 再按配置截取
+        "weak_concepts": weak_concepts[:10],
+        "retention": {
+            "retention_rate": retention_rate,
+            "retention_target_met": retention_rate >= 0.7,
+            "mastery_conversion": mastery_conversion,
+            "weak_detection_accuracy": weak_accuracy
+        }
     }
 
 
